@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% load bootstrap4 %}
+
+{% block style %}
+style="background-image: url('/static/img/about.jpg')"
+{% endblock %}
+
+{% block heading %}
+<div class="post-heading">
+	<h1>{{ book.title }}</h1>
+	<span class="meta">Written by {{ book.list_authors }}</span>
+  </div>
+{% endblock %}
+
+{% block content %}
+	  <h4>Fill out the following form</h4>
+	  <br>
+	<form method="post" validate>
+		{% csrf_token %}
+		{% bootstrap_form form %}
+		<input type="submit" class="btn btn-info" value="Submit Review">
+	</form>
+{% endblock %}

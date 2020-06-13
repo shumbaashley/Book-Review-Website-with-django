@@ -1,0 +1,28 @@
+{% extends "index.html" %}
+{% load humanize %}
+
+{% block style %}
+style="background-image: url('../static/img/home-bg.jpg')"
+{% endblock %}
+
+{% block heading %}
+<div class="site-heading">
+    <h1>Read It!</h1>
+    <span class="subheading">A book review website</span>
+  </div>
+{% endblock %}
+
+{% block content %}
+    {% for book in books %}
+    
+        {% include "book-detail.html" %}
+        
+    {% endfor  %}
+  
+
+<!-- Pager -->
+  <div class="clearfix">
+    <em><h5 class=" float-left">Total {{ books.count|apnumber }} book{{books.count|pluralize}} reviewed!</h5></em>
+    <a class="btn btn-primary float-right" href="#">Older Reviews &rarr;</a>
+  </div>
+{% endblock %}

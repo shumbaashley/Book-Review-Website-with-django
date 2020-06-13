@@ -1,0 +1,65 @@
+{% extends "index.html" %}
+{% load bootstrap4 %}
+
+{% block style %}
+style="background-image: url('../static/img/3.jpg')"
+{% endblock %}
+
+{% block heading %}
+<div class="site-heading">
+	<h1>Review Books</h1>
+	<span class="meta">Comment on a new book you read!</span>
+  </div>
+{% endblock %}
+
+{% block content %}
+	<h1>Books pending review</h1>
+	<br>
+	{% if books %}
+		<table class="table table-striped ">
+			<thead class="thead-dark">
+				<th>Title &amp; Author</th>
+				<th>Assigned To</th>
+				<th class="align-right">Action</th>
+
+			</thead>
+			<tbody>
+				{% for book in books %}
+					<tr>
+						<td class="title">
+							{{ book.title }} by {{ book.list_authors }}
+						</td>
+						<td>
+							{% if book.reviewed_by == request.user %}
+								<span class="highlight">Me</span>
+							{% elif book.reviewed_by %}
+							{{ book.reviewed_by.get_full_name|default:book.reviewed_by.username}}
+							{% else %}
+								-
+							{% endif %}
+						</td>
+						<td class="align-right">
+							<a href="{% url 'review-book' book.pk %}">Review</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>There are no books waiting to be reviewed.  Good job!</p>
+	{% endif %}
+
+	<br>
+	<h2>Add a new book to review</h2>
+	<br>
+	<form method="post">
+		{% csrf_token %}
+		{% bootstrap_form form %}	
+		<input type="submit" class="btn btn-info"" value="Add Book">
+		<p>Can't find the author you're looking for? <a href="{% url 'add-author' %}">Add a New Author</a></p>
+
+	</form>
+	
+	
+	
+{% endblock %}

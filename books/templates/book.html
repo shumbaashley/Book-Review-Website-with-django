@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+
+{% block style %}
+style="background-image: url('/static/img/course05.jpg')"
+{% endblock %}
+
+{% block heading %}
+<div class="post-heading">
+    <h1>Book Detail</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+    {% if book.review%}
+        {% include "book-detail.html" %}
+    {% endif %}
+{% endblock %}

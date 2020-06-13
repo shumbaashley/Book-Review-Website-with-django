@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+{% load bootstrap4 %}
+
+{% block style %}
+style="background-image: url('/static/img/bg1.jpg')"
+{% endblock %}
+
+{% block heading %}
+<div class="post-heading">
+    <h1>Add New Author</h1>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+    <h3>Add a new Author</h3>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <input type="submit" class="btn btn-info" value="Add Author">
+    </form>
+    
+{% endblock %}
