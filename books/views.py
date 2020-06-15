@@ -6,8 +6,8 @@ from django.db.models import Count
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, View
 from django.views.generic.edit import CreateView
-from .forms import BookForm, ReviewForm
-from .models import Author, Book
+from .forms import BookForm, ReviewForm, CommentForm
+from .models import Author, Book, Comment
 
 # Create your views here.
 def login_view(request): 
@@ -125,5 +125,28 @@ class CreateAuthor(CreateView):
         return reverse('review-books')
 
 
+def create_comment_view(request, pk):
+
+    name = request.POST['name']
+    email = request.POST['email']
+    message = request.POST['message']
+
+    comment = Comment.objects.create(name=name, email=email, message=message)
+    comment.save()
+
+    book = Book.objects.get(pk = pk)
+    
+    
+    book.comments.add(comment)
+    book.save()
+    
+    return HttpResponseRedirect(reverse("book-detail", args=(pk,)))
+
+
+
+
 def contact_view(request):
     return render(request, "contact.html", {})
+
+def about_view(request):
+    return render(request, "about.html", {})

@@ -1,0 +1,18 @@
+
+<div class="post-preview">  
+    {% if book.is_favourite %} <p class="badge badge-info float-right"><i class="fa fa-thumbs-up "></i> Favourite</p>{% endif %}
+        <h2 class="post-title">
+          <a href="{% url 'book-detail' book.pk %}">{{ book.title }}</a> 
+        </h2>
+        <h4 class="post-subtitle">
+          By {% for author in book.authors.all %}<a href="{% url 'author-detail' author.pk %}">{{author.name}} </a>{% endfor %}
+        </h4>
+        <a href="{% url 'book-detail' book.pk %}"><p>{{book.review|truncatechars:305|linebreaks}}</p></a>
+          <p class="post-meta">
+              Reviewed on <strong>{{ book.date_reviewed|date:"D d M Y" }}</strong>
+              {% if book.reviewed_by %}
+                  by <strong>{{ book.reviewed_by.get_full_name|default:book.reviewed_by.username}}</strong>
+              {% endif %}
+          </p>
+    </div>
+    <hr>

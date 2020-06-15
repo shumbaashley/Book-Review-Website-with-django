@@ -6,12 +6,15 @@ style="background-image: url('/static/img/course05.jpg')"
 
 {% block heading %}
 <div class="post-heading">
-    <h1>Book Detail</h1>
+    <h1>Full Book Review </h1>
 </div>
 {% endblock %}
 
 {% block content %}
-    {% if book.review%}
+    {% if book.review %}
         {% include "book-detail.html" %}
+    {% endif %}
+    {% if book.review %}
+        {% include "book-comments.html" %}
     {% endif %}
 {% endblock %}

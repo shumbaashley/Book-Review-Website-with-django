@@ -1,7 +1,7 @@
 
 <div class="post-preview">  
   {% if book.is_favourite %} <p class="badge badge-info float-right"><i class="fa fa-thumbs-up "></i> Favourite</p>{% endif %}
-      <h2 class="post-title">
+      <h2 class="section-heading">
         <a href="{% url 'book-detail' book.pk %}">{{ book.title }}</a> 
       </h2>
       <h4 class="post-subtitle">
@@ -16,3 +16,4 @@
         </p>
   </div>
   <hr>
+  

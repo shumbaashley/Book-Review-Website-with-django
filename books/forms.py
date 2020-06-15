@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book
+from .models import Book, Comment
 
 class ReviewForm(forms.Form):
     """
@@ -40,3 +40,10 @@ class BookForm(forms.ModelForm):
             )
         except Book.DoesNotExist:
             return self.cleaned_data
+
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ["name", "email", "message"]

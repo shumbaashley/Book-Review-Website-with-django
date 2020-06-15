@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import Author, Book
+from .models import Author, Book, Comment
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Book Details", {"fields": ["title", "authors"]}),
-        ("Review", {"fields": ["is_favourite", "review","reviewed_by", "date_reviewed"]})
+        ("Review", {"fields": ["is_favourite", "review","reviewed_by", "date_reviewed"]}),
+        ("Comments", {"fields": ["comments"]})
     ]
 
     readonly_fields = ("date_reviewed",)
@@ -23,3 +24,4 @@ class BookAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Author)
+admin.site.register(Comment)

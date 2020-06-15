@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.decorators import login_required
 from  books.views import ( AuthorDetail, BookDetail, AuthorList, ReviewList, CreateAuthor, list_books, review_book )
-from books.views import sign_in_view, sign_out_view, login_view, contact_view
+from books.views import sign_in_view, sign_out_view, login_view, contact_view, create_comment_view, about_view
 urlpatterns = [
     # Auth
     path('logout/', sign_out_view, name='logout'),
@@ -31,10 +31,14 @@ urlpatterns = [
     path('', list_books, name='books'),
     path('authors/', AuthorList.as_view(), name='authors'),
     path('books/<int:pk>/', BookDetail.as_view(), name='book-detail'),
+    path('books/<int:pk>/comment', create_comment_view, name='create-comment' ),
     path('authors/add/', login_required(CreateAuthor.as_view()), name='add-author'),
     path('authors/<int:pk>/', AuthorDetail.as_view(), name='author-detail'),
     path('review/', login_required(ReviewList.as_view()), name='review-books'),
     path('review/<int:pk>/', review_book, name='review-book'),
+
     path('contact/', contact_view, name="contact"),
+    path('about/', about_view, name="about"),
+
 
 ]

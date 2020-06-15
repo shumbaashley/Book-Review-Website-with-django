@@ -8,21 +8,22 @@ style="background-image: url('../static/img/home-bg.jpg')"
 {% block heading %}
 <div class="site-heading">
     <h1>Read It!</h1>
-    <span class="subheading">A book review website</span>
+    <span class="subheading">A deep dive into the magical world of books!</span>
   </div>
 {% endblock %}
 
 {% block content %}
     {% for book in books %}
     
-        {% include "book-detail.html" %}
+        {% include "book-short.html" %}
         
     {% endfor  %}
   
-
+{% if books.count > 5 %}
 <!-- Pager -->
   <div class="clearfix">
     <em><h5 class=" float-left">Total {{ books.count|apnumber }} book{{books.count|pluralize}} reviewed!</h5></em>
     <a class="btn btn-primary float-right" href="#">Older Reviews &rarr;</a>
   </div>
+{% endif %}
 {% endblock %}
