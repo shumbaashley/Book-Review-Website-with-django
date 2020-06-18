@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Author, Book, Comment
+from .models import Author, Book, Comment, Editor
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
-        ("Book Details", {"fields": ["title", "authors"]}),
+        ("Book Details", {"fields": ["title", "authors", "image"]}),
         ("Review", {"fields": ["is_favourite", "review","reviewed_by", "date_reviewed"]}),
         ("Comments", {"fields": ["comments"]})
     ]
@@ -25,3 +25,4 @@ class BookAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Author)
 admin.site.register(Comment)
+admin.site.register(Editor) 

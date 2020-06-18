@@ -1,12 +1,32 @@
+{% load humanize %}
+
 
 <div class="post-preview pt-2">  
     <h2 class="post-title">
-      Comments 
+      Comments <i class="fa fa-comments"></i>
     </h2>
-    <blockquote class="blockquote">Leave a comment about the review!</blockquote>
-</div>
+<hr>
+{% if book.comments.count %}
+<h5 class="font-italic">  {{ book.comments.count }} comment{{book.comments.count|pluralize}} made!</h5>
+{% else %}
+<h5 class="font-italic">  No comments yet!</h5>
 
-<form action="{% url 'create-comment' book.id %}" method="post" class="pb-5">
+{% endif %}
+{% for comment in book.comments.all|dictsortreversed:"date" %}
+
+<div class="post-preview px-2"> 
+  <p><i class="fa fa-user"></i> <span class="font-weight-bold">{{comment.name}}</span>  - {{ comment.message }} <a href="#form">Reply</a></p> 
+  
+    <p class="post-meta">
+        Added <strong>{{ comment.date|time:"H:i" }} {{ comment.date|date:"D d M Y" }} </strong>
+    </p>
+</div>
+<hr>
+{% endfor %}
+</div>
+<blockquote class="blockquote">Leave a comment about the review!</blockquote>
+
+<form action="{% url 'create-comment' book.id %}" id="form" method="post" class="pb-5">
     {% csrf_token %}
     <div class="control-group">
         <div class="form-group floating-label-form-group controls">
@@ -35,17 +55,8 @@
         <button type="submit" class="btn btn-primary" id="sendMessageButton">Add Comment</button>
       </div>
 </form>
-{% for comment in book.comments.all %}
-<div class="post-preview"> 
-  <h5><i class="fa fa-user"></i> {{comment.name}}</h5>
-  <p>{{ comment.message|linebreaks }}</p>
-  
-    <p class="post-meta">
-        Added <strong>{{ comment.date|timesince:comment.date }}</strong>
-    </p>
-</div>
-<hr>
-{% endfor %}
+
+
 <p></p>
 
 

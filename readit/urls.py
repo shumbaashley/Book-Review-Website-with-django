@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static 
+from django.conf import settings 
 from django.contrib.auth.decorators import login_required
-from  books.views import ( AuthorDetail, BookDetail, AuthorList, ReviewList, CreateAuthor, list_books, review_book )
-from books.views import sign_in_view, sign_out_view, login_view, contact_view, create_comment_view, about_view
+from  books.views import ( AuthorDetail, AuthorList, ReviewList, CreateAuthor, list_books, review_book )
+from books.views import sign_in_view, sign_out_view, login_view, contact_view, create_comment_view, about_view, book_detail_view
 urlpatterns = [
     # Auth
     path('logout/', sign_out_view, name='logout'),
@@ -30,7 +32,7 @@ urlpatterns = [
     # Custom
     path('', list_books, name='books'),
     path('authors/', AuthorList.as_view(), name='authors'),
-    path('books/<int:pk>/', BookDetail.as_view(), name='book-detail'),
+    path('books/<int:pk>/', book_detail_view, name='book-detail'),
     path('books/<int:pk>/comment', create_comment_view, name='create-comment' ),
     path('authors/add/', login_required(CreateAuthor.as_view()), name='add-author'),
     path('authors/<int:pk>/', AuthorDetail.as_view(), name='author-detail'),
@@ -41,4 +43,4 @@ urlpatterns = [
     path('about/', about_view, name="about"),
 
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -8,7 +8,7 @@ style="background-image: url('../static/img/3.jpg')"
 {% block heading %}
 <div class="site-heading">
 	<h1>Review Books</h1>
-	<span class="meta">Comment on a new book you read!</span>
+	<span class="meta">Comment on a new book you've read!</span>
   </div>
 {% endblock %}
 
@@ -19,6 +19,7 @@ style="background-image: url('../static/img/3.jpg')"
 		<table class="table table-striped ">
 			<thead class="thead-dark">
 				<th>Title &amp; Author</th>
+				<th>Image</th>
 				<th>Assigned To</th>
 				<th class="align-right">Action</th>
 
@@ -29,11 +30,12 @@ style="background-image: url('../static/img/3.jpg')"
 						<td class="title">
 							{{ book.title }} by {{ book.list_authors }}
 						</td>
+						<td><img class="img-fluid rounded" src="{{MEDIA_URL}}{{ book.image }}" alt="""></td>
 						<td>
 							{% if book.reviewed_by == request.user %}
 								<span class="highlight">Me</span>
 							{% elif book.reviewed_by %}
-							{{ book.reviewed_by.get_full_name|default:book.reviewed_by.username}}
+							{{ book.reviewed_by.get_full_name|default:book.reviewed_by.user}}
 							{% else %}
 								-
 							{% endif %}

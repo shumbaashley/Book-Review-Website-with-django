@@ -7,13 +7,13 @@ style="background-image: url('../static/img/home-bg.jpg')"
 
 {% block heading %}
 <div class="site-heading">
-    <h1>Read It!</h1>
+    <h1>The Reader's Guide</h1>
     <span class="subheading">A deep dive into the magical world of books!</span>
   </div>
 {% endblock %}
 
 {% block content %}
-    {% for book in books %}
+    {% for book in books|dictsortreversed:"date_reviewed"  %}
     
         {% include "book-short.html" %}
         
