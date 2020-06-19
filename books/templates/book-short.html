@@ -3,16 +3,16 @@
  
     {% if book.is_favourite %} <p style="cursor: pointer;" class="badge badge-info float-right"><i class="fa fa-thumbs-up "></i> Favourite</p>{% endif %}
         <h2 class="post-title">
-          <a style="text-decoration: inherit;" href="{% url 'book-detail' book.pk %}">{{ book.title }}</a> 
+          <a style="text-decoration: inherit;" href="{% url 'book-detail' book.slug %}">{{ book.title }}</a> 
         </h2>
         <h4 class="post-subtitle">
           By {% for author in book.authors.all %}<a style="text-decoration: inherit;" href="">{{author.name}} </a>{% endfor %}
         </h4>
-        <p>{{book.review|truncatechars:300}} <span><a style="text-decoration: inherit; color:#17a2b8; " href="{% url 'book-detail' book.pk %}">Read More &rarr;</a></span></p></a>
+        <p>{{book.review|truncatechars:300}} <span><a style="text-decoration: inherit; color:#17a2b8; " href="{% url 'book-detail' book.slug %}">Read More &rarr;</a></span></p></a>
           <p class="post-meta">
               Reviewed on <strong>{{ book.date_reviewed|date:"D d M Y" }}</strong>
               {% if book.reviewed_by %}
-                  by <strong><a style="text-decoration: inherit; color: inherit;" href="{% url 'reviewer' book.reviewed_by.user.id %}">{{ book.reviewed_by.user.get_full_name|default:book.reviewed_by.user}}</strong>
+                  by <strong><a style="text-decoration: inherit; color: inherit;" href="{% url 'editor-detail' book.reviewed_by.slug %}">{{ book.reviewed_by.user.get_full_name|default:book.reviewed_by.user}}</strong>
               {% endif %}
               <img src="{{ book.reviewed_by.image.url }}" alt="" class="ml-3 img-fluid " style="width: 50px; height: 50px; border-radius: 100%;"></a>
 

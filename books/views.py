@@ -49,8 +49,8 @@ class EditorList(View):
 
         return render(request, "editors.html", context)
 
-def book_detail_view(request, pk):
-    book = Book.objects.get(pk=pk)
+def book_detail_view(request, slug):
+    book = Book.objects.get(slug=slug)
     context = {
         "book" : book
     }
@@ -125,7 +125,7 @@ class CreateAuthor(CreateView):
         return reverse('review-books')
 
 
-def create_comment_view(request, pk):
+def create_comment_view(request, slug):
 
     name = request.POST['name']
     email = request.POST['email']
@@ -134,13 +134,13 @@ def create_comment_view(request, pk):
     comment = Comment.objects.create(name=name, email=email, message=message)
     comment.save()
 
-    book = Book.objects.get(pk = pk)
+    book = Book.objects.get(slug = slug)
     
     
     book.comments.add(comment)
     book.save()
     
-    return HttpResponseRedirect(reverse("book-detail", args=(pk,)))
+    return HttpResponseRedirect(reverse("book-detail", args=(slug,)))
 
 
 
@@ -151,9 +151,3 @@ def contact_view(request):
 def about_view(request):
     return render(request, "about.html", {})
 
-def reviewer_profile_view(request, pk):
-    book = Book.objects.get(pk=pk)
-    context = {
-        "editor": book.reviewed_by
-    }
-    return render(request, "editor.html", context)

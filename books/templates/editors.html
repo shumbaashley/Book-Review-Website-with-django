@@ -14,8 +14,8 @@ style="background-image: url('../static/img/3.jpg')"
 {% block content %}
     {% for editor in editors %}
     <div class="post-preview text-center">
-      <a href="{% url 'editor-detail' editor.pk %}"><img src="{{ editor.image.url }}" alt="" class="img-fluid mb-3" style="width: 70px; height: 70px; border-radius: 100%;"></a>
-        <a href="{% url 'editor-detail' editor.pk %}">
+      <a href="{% url 'editor-detail' editor.slug %}"><img src="{{ editor.image.url }}" alt="" class="img-fluid mb-3" style="width: 70px; height: 70px; border-radius: 100%;"></a>
+        <a href="{% url 'editor-detail' editor.slug %}">
           <h3 class="post-subtitle">
             {{editor.user.get_full_name}}          
           </h3>

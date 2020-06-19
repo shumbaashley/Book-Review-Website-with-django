@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings 
 from django.contrib.auth.decorators import login_required
 from  books.views import ( EditorDetail, EditorList, ReviewList, CreateAuthor, list_books, review_book )
-from books.views import sign_in_view, sign_out_view, login_view, contact_view, create_comment_view, about_view, book_detail_view, reviewer_profile_view
+from books.views import sign_in_view, sign_out_view, login_view, contact_view, create_comment_view, about_view, book_detail_view 
 urlpatterns = [
     # Auth
     path('logout/', sign_out_view, name='logout'),
@@ -32,13 +32,12 @@ urlpatterns = [
     # Custom
     path('', list_books, name='books'),
     path('editors/', EditorList.as_view(), name='editors'),
-    path('books/<int:pk>/', book_detail_view, name='book-detail'),
-    path('books/<int:pk>/comment', create_comment_view, name='create-comment' ),
+    path('book-review/<slug:slug>/', book_detail_view, name='book-detail'),
+    path('books/<slug:slug>/comment', create_comment_view, name='create-comment' ),
     path('authors/add/', login_required(CreateAuthor.as_view()), name='add-author'),
-    path('editors/<int:pk>/', EditorDetail.as_view(), name='editor-detail'),
+    path('editors/<slug:slug>/', EditorDetail.as_view(), name='editor-detail'),
     path('review/', login_required(ReviewList.as_view()), name='review-books'),
     path('review/<int:pk>/', review_book, name='review-book'),
-    path('article-editor/<int:pk>', reviewer_profile_view, name='reviewer'),
 
     path('contact/', contact_view, name="contact"),
     path('about/', about_view, name="about"),

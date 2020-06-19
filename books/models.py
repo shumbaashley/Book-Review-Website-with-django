@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.db import models
 from django.utils.timezone import now
 from datetime import datetime
+from django.template.defaultfilters import slugify
 
 
 # Create your models here.
@@ -17,8 +18,13 @@ class Editor(models.Model):
     phone = models.CharField(max_length=64, blank=True, null=True)
     email = models.EmailField(max_length=64, blank=True, null=True)
     web = models.CharField(max_length=64, blank=True, null=True)
+    slug = models.SlugField(max_length=150, null = True, blank = True)
 
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.user.username)
 
+        super(Editor, self).save(*args, **kwargs)
 
 
     def __str__(self):
@@ -53,6 +59,9 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         if (self.review and self.date_reviewed is None):
             self.date_reviewed = now()
+
+        if not self.id:
+            self.slug = slugify(self.title)
 
         super(Book, self).save(*args, **kwargs)
 

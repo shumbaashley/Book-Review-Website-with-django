@@ -16,7 +16,8 @@ style="background-image: url('../static/img/home-bg.jpg')"
     {% for book in books|dictsortreversed:"date_reviewed"  %}
     
         {% include "book-short.html" %}
-        
+    {% empty %}
+    <p class="text-center">Posts coming soon...</p>
     {% endfor  %}
   
 {% if books.count > 5 %}
