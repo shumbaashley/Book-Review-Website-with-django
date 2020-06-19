@@ -1,0 +1,59 @@
+{% extends "index.html" %}
+
+{% block style %}
+style="background-image: url('/static/img/bg-masthead.jpg')"
+{% endblock %}
+
+{% block heading %}
+<div class="site-heading">
+    <h1>Editor Profile</h1>
+    <span class="subheading">Know more about the editor...</span>
+  </div>
+{% endblock %}
+
+{% block content %}
+
+      <div class="row media post">
+          <img class="d-flex img-fluid w-25 align-self-center" src="{{editor.image.url}}" alt="Speaker 1" class="img-fluid" >
+
+        <div class="media-body ml-5">
+          <div class="post-preview">
+            <h2>{{ editor.user.get_full_name }}</h2>
+            <p class="post-meta" >Editor</p>
+              {% if editor.twitter %}
+              <a class="p-3" href="{{ editor.twitter  }}"><i class="fab fa-twitter fa-lg"></i></a>
+              {% endif %}
+              {% if editor.facebook %}
+              <a class="p-3" href="{{ editor.facebook }}"><i class="fab fa-facebook fa-lg"></i></a>
+              {% endif %}
+              {% if editor.instagram  %}
+              <a class="p-3" href="{{ editor.instagram }}"><i class="fab fa-instagram fa-lg"></i></a>
+              {% endif %}
+          </div>
+        </div> 
+      </div> 
+      <div class="pt-5">
+        <h5>About Me</h5>
+
+
+        <p>{{ editor.bio }}</p>
+        
+        <div class="post-preview">
+            <h5 class="pb-4" >Contact Details</h5>
+
+            {% if editor.email  %}
+            <p class="post-meta"><i class="fa fa-envelope"></i> <span class="ml-3">{{ editor.email }}</span></p>
+          {% endif %}
+          {% if editor.phone  %}
+            <p class="post-meta"><i class="fa fa-phone"></i>  <span class="ml-3">{{ editor.phone }}</span></p>
+          {% endif %}
+          {% if editor.web  %}
+            <p class="post-meta"><i class="fa fa-globe"></i> <span class="ml-3"><a style="text-decoration: inherit; color:#17a2b8;" href="{{ editor.web }}">{{ editor.web }}</a></span></p>
+          {% endif %}
+        </div>
+          
+      </div>
+      
+                     
+      <hr>
+{% endblock %}

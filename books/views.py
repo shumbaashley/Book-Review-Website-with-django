@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import DetailView, View
 from django.views.generic.edit import CreateView
 from .forms import BookForm, ReviewForm, CommentForm
-from .models import Author, Book, Comment
+from .models import Author, Book, Comment, Editor
 
 # Create your views here.
 def login_view(request): 
@@ -39,19 +39,15 @@ def list_books(request):
     }
     return render(request, "lists.html", context) 
 
-class AuthorList(View):
+class EditorList(View):
     def get(self, request):
-        authors = Author.objects.annotate(
-            published_books=Count('books')
-        ).filter(
-            published_books__gt=0
-        )
+        editors = Editor.objects.all
 
         context = {
-            'authors': authors,
+            'editors': editors,
         }
 
-        return render(request, "authors.html", context)
+        return render(request, "editors.html", context)
 
 def book_detail_view(request, pk):
     book = Book.objects.get(pk=pk)
@@ -61,9 +57,9 @@ def book_detail_view(request, pk):
  
     return render(request, "book.html", context)
 
-class AuthorDetail(DetailView):
-    model = Author
-    template_name = "author.html"
+class EditorDetail(DetailView):
+    model = Editor
+    template_name = "editor.html"
 
 class ReviewList(View):
     """
@@ -154,3 +150,10 @@ def contact_view(request):
 
 def about_view(request):
     return render(request, "about.html", {})
+
+def reviewer_profile_view(request, pk):
+    book = Book.objects.get(pk=pk)
+    context = {
+        "editor": book.reviewed_by
+    }
+    return render(request, "editor.html", context)

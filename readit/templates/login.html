@@ -40,7 +40,7 @@
             <a class="nav-link" href="{% url 'books' %}">Books</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'authors' %}">Authors</a>
+            <a class="nav-link" href="{% url 'editors' %}">Authors</a>
           </li>
           {% if request.user.is_authenticated %}
           <li class="nav-item">
@@ -113,7 +113,7 @@
             <button type="submit" class="btn btn-primary" id="sendMessageButton">Login</button>
           </div>
         </form>
-        <p class="text-center"><a href="{% url 'books' %}">Back to Home</a></p>
+        <p class="text-center font-italic">Only content editors can login. <a style="text-decoration: inherit; color:#17a2b8;" href="{% url 'books' %}">Back to Home</a></p>
       </div>
       </div>
         

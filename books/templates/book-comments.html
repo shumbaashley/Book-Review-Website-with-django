@@ -15,7 +15,7 @@
 {% for comment in book.comments.all|dictsortreversed:"date" %}
 
 <div class="post-preview px-2"> 
-  <p><i class="fa fa-user"></i> <span class="font-weight-bold">{{comment.name}}</span>  - {{ comment.message }} <a href="#form">Reply</a></p> 
+  <p><i class="fa fa-user"></i> <span class="font-weight-bold">{{comment.name}}</span>  - {{ comment.message }} <a style="text-decoration: inherit;" href="#form">Reply</a></p> 
   
     <p class="post-meta">
         Added <strong>{{ comment.date|time:"H:i" }} {{ comment.date|date:"D d M Y" }} </strong>

@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+
+{% block style %}
+style="background-image: url('../static/img/3.jpg')"
+{% endblock %}
+
+{% block heading %}
+<div class="site-heading">
+    <h1>Our Editors</h1>
+    <span class="subheading">Meet our content editors...</span>
+  </div>
+{% endblock %}
+
+{% block content %}
+    {% for editor in editors %}
+    <div class="post-preview text-center">
+      <a href="{% url 'editor-detail' editor.pk %}"><img src="{{ editor.image.url }}" alt="" class="img-fluid mb-3" style="width: 70px; height: 70px; border-radius: 100%;"></a>
+        <a href="{% url 'editor-detail' editor.pk %}">
+          <h3 class="post-subtitle">
+            {{editor.user.get_full_name}}          
+          </h3>
+        </a>
+      </div>
+      <hr>
+    {% endfor %}
+{% endblock %}

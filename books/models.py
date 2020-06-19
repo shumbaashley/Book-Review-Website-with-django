@@ -4,11 +4,22 @@ from django.db import models
 from django.utils.timezone import now
 from datetime import datetime
 
+
 # Create your models here.
 
 class Editor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="editor")
     image = models.ImageField(upload_to='editor-images/', blank=True, null=True)
+    bio = models.TextField(max_length=500, blank=True, null=True)
+    facebook = models.CharField(max_length=64, blank=True, null=True)
+    instagram = models.CharField(max_length=64, blank=True, null=True)
+    twitter = models.CharField(max_length=64, blank=True, null=True)
+    phone = models.CharField(max_length=64, blank=True, null=True)
+    email = models.EmailField(max_length=64, blank=True, null=True)
+    web = models.CharField(max_length=64, blank=True, null=True)
+
+
+
 
     def __str__(self):
         return  f"{self.user}"
@@ -30,9 +41,11 @@ class Book(models.Model):
     date_reviewed = models.DateTimeField(blank=True, null=True, default=datetime.now())
     is_favourite = models.BooleanField(default=False, verbose_name="Favourite?")
     comments = models.ManyToManyField(Comment, related_name="feedback", blank=True)
+    slug = models.SlugField(max_length=150, null = True, blank = True)
 
     def __str__(self):
         return "{} by {}".format(self.title, self.list_authors())
+    
 
     def list_authors(self):
         return ", ".join([author.name for author in self.authors.all()])
