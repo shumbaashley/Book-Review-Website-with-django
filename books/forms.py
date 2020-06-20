@@ -24,7 +24,7 @@ class ReviewForm(forms.Form):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'image', 'authors', 'reviewed_by']
+        fields = ['title', 'image', 'genre', 'authors', 'reviewed_by']
 
     def clean(self):
         super(BookForm, self).clean()

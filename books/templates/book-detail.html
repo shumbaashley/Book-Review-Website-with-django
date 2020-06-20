@@ -3,16 +3,18 @@
       <div class="media ">
         <div class="media-body">
           <h2 class="section-heading">
-            <a style="text-decoration: inherit;" href="{% url 'book-detail' book.slug %}">{{ book.title }}</a> 
+            {{ book.title }}
           </h2>
           <h4 class="post-subtitle">
-            By {% for author in book.authors.all %}<a style="text-decoration: inherit;" href="">{{author.name}} </a>{% endfor %}
+            By {% for author in book.authors.all %}{{author.name}}{% endfor %}
           </h4>
-          {% if book.is_favourite %} <p style="cursor: pointer;" class="badge badge-info"><i class="fa fa-thumbs-up "></i> Favourite</p>{% endif %}
+          {% if book.genre %} <p data-toggle="tool-tip" data-placement="bottom" title="Book's Genre" style="cursor: pointer;" class="badge badge-dark"><i class="fa fa-book "></i> {{ book.genre }}</p>{% endif %}
+
+          {% if book.is_favourite %} <p data-toggle="tool-tip" data-placement="bottom" title="This book is in our top 100 all-time list" style="cursor: pointer;" class="badge badge-info"><i class="fa fa-thumbs-up "></i> Favourite</p>{% endif %}
           
         </div>
        
-          <img style="cursor: pointer;" class="d-flex align-self-center img-fluid w-25" src="{{ book.image.url }}" alt="{{ book.title|lower }}" >
+          <img data-toggle="tool-tip" data-placement="bottom" title="Book's Cover Image" style="cursor: pointer;" class="d-flex align-self-center img-fluid w-25" src="{{ book.image.url }}" alt="{{ book.title|lower }}" >
 
     </div>
     <p>{{book.review|linebreaks }}</p>
@@ -21,8 +23,7 @@
                 {% if book.reviewed_by %}
                     by <strong><a style="text-decoration: inherit; color: inherit;" href="{% url 'editor-detail' book.reviewed_by.slug %}">{{ book.reviewed_by.user.get_full_name|default:book.reviewed_by.user}}</strong>
                 {% endif %}
-                <img src="{{ book.reviewed_by.image.url }}" alt="" class="ml-3 img-fluid " style="width: 50px; height: 50px; border-radius: 100%;"></a>
+                <img data-toggle="tool-tip" data-placement="bottom" title="Editor's Profile Picture" src="{{ book.reviewed_by.image.url }}" alt="" class="ml-3 img-fluid " style="width: 50px; height: 50px; border-radius: 100%;"></a>
             </p>
       </div>
         <hr>
-  

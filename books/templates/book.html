@@ -6,7 +6,8 @@ style="background-image: url('/static/img/course05.jpg')"
 
 {% block heading %}
 <div class="post-heading">
-    <h1>Full Book Review </h1>
+    <h1>Featured Article </h1>
+    <span class="meta">{{ book.title }}</span>
 </div>
 {% endblock %}
 
@@ -15,7 +16,57 @@ style="background-image: url('/static/img/course05.jpg')"
     {% if book.review %}
         {% include "book-detail.html" %}
     {% endif %}
+    {% if book.audible or book.kindle %}
+        {% include "book-resources.html" %}
+    {% endif %}
     {% if book.review %}
         {% include "book-comments.html" %}
     {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+    $(function(){
+        var $myform = $("#form")
+        $myform.submit(function (event) {
+            event.preventDefault()
+            var $formData = $(this).serialize()
+            $.ajax({
+                method: "POST",
+                url: '{% url "comment" book.slug %}',
+                data: $formData,
+                success: handleFormSuccess,
+
+            })
+
+            function handleFormSuccess(data){
+                alert(data.message)
+                $myform[0].reset();
+                newCount(data);
+                addNewComment(data)
+            }
+
+            function addNewComment(data){
+                $("#newcomment").append(`
+                <p><i class="fa fa-user fa-lg"></i> <span style="font-size: larger;" class="font-weight-bold pl-3">${ data.comment.name }</span>  - <span class="p-1">${ data.comment.message }</span></p> 
+  
+                <p class="post-meta">
+                    Added <strong>${ data.comment.time } ${ data.comment.date } </strong>
+                    <hr>
+                </p>
+                `)
+            }
+            function newCount(data){
+                if (data.count == 1){
+                    $("#newcount").replaceWith(`<h5 class="font-italic" > ${ data.count } comment made! </h5>`)
+
+                } else {
+                    $("#newcount").replaceWith(`<h5 class="font-italic" > ${ data.count  } comments made! </h5>`)
+                }
+
+            }
+        });
+    })
+    
+    </script>
 {% endblock %}

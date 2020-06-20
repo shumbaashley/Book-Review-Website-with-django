@@ -30,7 +30,7 @@ style="background-image: url('../static/img/3.jpg')"
 						<td class="title">
 							{{ book.title }} by {{ book.list_authors }}
 						</td>
-						<td><img class="img-fluid rounded" src="{{MEDIA_URL}}{{ book.image }}" alt="""></td>
+						<td><img class="img-fluid rounded" src="{{ book.image.url }}" alt="""></td>
 						<td>
 							{% if book.reviewed_by == request.user %}
 								<span class="highlight">Me</span>
@@ -41,7 +41,7 @@ style="background-image: url('../static/img/3.jpg')"
 							{% endif %}
 						</td>
 						<td class="align-right">
-							<a href="{% url 'review-book' book.pk %}">Review</a>
+							<a href="{% url 'review-book' book.slug %}">Review</a>
 						</td>
 					</tr>
 				{% endfor %}
@@ -54,7 +54,7 @@ style="background-image: url('../static/img/3.jpg')"
 	<br>
 	<h2>Add a new book to review</h2>
 	<br>
-	<form method="post">
+	<form action="{% url 'review-books' %}" method="post">
 		{% csrf_token %}
 		{% bootstrap_form form %}	
 		<input type="submit" class="btn btn-info"" value="Add Book">

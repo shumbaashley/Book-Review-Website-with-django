@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.db.models import Count
@@ -8,6 +8,7 @@ from django.views.generic import DetailView, View
 from django.views.generic.edit import CreateView
 from .forms import BookForm, ReviewForm, CommentForm
 from .models import Author, Book, Comment, Editor
+from datetime import datetime
 
 # Create your views here.
 def login_view(request): 
@@ -50,7 +51,7 @@ class EditorList(View):
         return render(request, "editors.html", context)
 
 def book_detail_view(request, slug):
-    book = Book.objects.get(slug=slug)
+    book = get_object_or_404(Book, slug=slug)
     context = {
         "book" : book
     }
@@ -66,7 +67,7 @@ class ReviewList(View):
 	List all of the books that we want to review.
 	"""
     def get(self, request):
-        books = Book.objects.filter(date_reviewed__isnull=True).prefetch_related('authors')
+        books = Book.objects.filter(date_reviewed__isnull=True)
         
         context = {
             'books': books,
@@ -76,7 +77,7 @@ class ReviewList(View):
 	
     def post(self, request):
         form = BookForm(request.POST)
-        books = Book.objects.filter(date_reviewed__isnull=True).prefetch_related('authors')
+        books = Book.objects.filter(date_reviewed__isnull=True)
        
         if form.is_valid():
            form.save()
@@ -89,11 +90,11 @@ class ReviewList(View):
         return render(request, "list-to-review.html", context)
 
 @login_required	
-def review_book(request, pk):
+def review_book(request, slug):
     """
 	Review an individual book
 	"""
-    book = get_object_or_404(Book, pk=pk)
+    book = get_object_or_404(Book, slug=slug)
     
     if request.method == 'POST':
         # Process our form
@@ -125,29 +126,43 @@ class CreateAuthor(CreateView):
         return reverse('review-books')
 
 
-def create_comment_view(request, slug):
-
-    name = request.POST['name']
-    email = request.POST['email']
-    message = request.POST['message']
-
-    comment = Comment.objects.create(name=name, email=email, message=message)
-    comment.save()
-
-    book = Book.objects.get(slug = slug)
-    
-    
-    book.comments.add(comment)
-    book.save()
-    
-    return HttpResponseRedirect(reverse("book-detail", args=(slug,)))
-
-
-
-
 def contact_view(request):
     return render(request, "contact.html", {})
 
 def about_view(request):
     return render(request, "about.html", {})
 
+def comment_view(request, slug):
+    if request.is_ajax() and request.POST:
+        name = request.POST['name']
+        email = request.POST['email']
+        message = request.POST['message']
+
+        comment = Comment.objects.create(name=name, email=email, message=message)
+        comment.save() 
+
+        book = get_object_or_404(Book, slug = slug)
+    
+    
+        book.comments.add(comment)
+        book.save()
+
+        count = book.comments.count()
+
+        date = datetime.now().strftime("%a %d %b %Y")
+        time = datetime.now().strftime("%H:%M")
+        comment = {
+            "name":name,
+            "message": message,
+            "date": date,
+            "time": time
+            
+        }
+        data = {
+            "message": "Your comment has been added succesfully!",
+            "comment": comment ,
+            "count": count       
+        }
+        return JsonResponse(data)
+    else:
+        raise Http404

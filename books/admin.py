@@ -4,7 +4,7 @@ from .models import Author, Book, Comment, Editor
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
-        ("Book Details", {"fields": ["title", "authors", "image", "slug"]}),
+        ("Book Details", {"fields": ["title", "authors", "image", "genre", "audible", "kindle", "slug"]}),
         ("Review", {"fields": ["is_favourite", "review","reviewed_by", "date_reviewed"]}),
         ("Comments", {"fields": ["comments"]})
     ]
