@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings 
 from django.contrib.auth.decorators import login_required
 from  books.views import ( EditorDetail, EditorList, ReviewList, CreateAuthor, list_books, review_book )
-from books.views import sign_in_view, sign_out_view, login_view, contact_view, about_view, book_detail_view, comment_view 
+from books.views import sign_in_view, sign_out_view, login_view, contact_view, about_view, book_detail_view, comment_view, home_view
 urlpatterns = [
     # Auth
     path('logout/', sign_out_view, name='logout'),
@@ -30,9 +30,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     
     # Custom
+    #path('', home_view, name='home'),
     path('', list_books, name='books'),
     path('editors/', EditorList.as_view(), name='editors'),
-    path('book-review/<slug:slug>/', book_detail_view, name='book-detail'),
+    path('posts/<slug:slug>/', book_detail_view, name='book-detail'),
     path('authors/add/', login_required(CreateAuthor.as_view()), name='add-author'),
     path('editors/<slug:slug>/', EditorDetail.as_view(), name='editor-detail'),
     path('review/', login_required(ReviewList.as_view()), name='review-books'),

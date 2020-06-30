@@ -2,13 +2,13 @@
 {% load bootstrap4 %}
 
 {% block style %}
-style="background-image: url('../static/img/3.jpg')"
+style="background-image: url('../static/img/home-bg.jpg')"
 {% endblock %}
 
 {% block heading %}
 <div class="site-heading">
 	<h1>Review Books</h1>
-	<span class="meta">Comment on a new book you've read!</span>
+	<span class="meta">Comment on an interesting book you've read!</span>
   </div>
 {% endblock %}
 
@@ -25,17 +25,23 @@ style="background-image: url('../static/img/3.jpg')"
 
 			</thead>
 			<tbody>
+				
 				{% for book in books %}
 					<tr>
 						<td class="title">
 							{{ book.title }} by {{ book.list_authors }}
 						</td>
-						<td><img class="img-fluid rounded" src="{{ book.image.url }}" alt="""></td>
-						<td>
-							{% if book.reviewed_by == request.user %}
-								<span class="highlight">Me</span>
+						<td class="text-center">
+							{% if book.image %}
+							<img style="width: 40px; height: 40px;" class="img-fluid rounded" src="{{ book.image.url }}" alt="""></td>
+							{% else %}
+								-
+							{% endif %}
+						<td class="text-center">
+							{% if book.reviewed_by.user == request.user %}
+								<span class="badge badge-dark">Me</span>
 							{% elif book.reviewed_by %}
-							{{ book.reviewed_by.get_full_name|default:book.reviewed_by.user}}
+							{{ book.reviewed_by.user.get_full_name|default:book.reviewed_by.user}}
 							{% else %}
 								-
 							{% endif %}
@@ -54,7 +60,7 @@ style="background-image: url('../static/img/3.jpg')"
 	<br>
 	<h2>Add a new book to review</h2>
 	<br>
-	<form action="{% url 'review-books' %}" method="post">
+	<form action="{% url 'review-books' %}" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		{% bootstrap_form form %}	
 		<input type="submit" class="btn btn-info"" value="Add Book">

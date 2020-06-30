@@ -2,7 +2,7 @@
 {% load humanize %}
 
 {% block style %}
-style="background-image: url('../static/img/home-bg.jpg')"
+style="background-image: url('../static/img/home.jpg')"
 {% endblock %}
 
 {% block heading %}
@@ -14,8 +14,9 @@ style="background-image: url('../static/img/home-bg.jpg')"
 
 {% block content %}
     {% for book in books|dictsortreversed:"date_reviewed"  %}
-    
+    {% if book.review %}
         {% include "book-short.html" %}
+    {% endif %}
     {% empty %}
     <p class="text-center">Posts coming soon...</p>
     {% endfor  %}

@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Book Review Website</title>
+  <title>The Reader's Guide</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -57,7 +57,7 @@
           <br>
       </div>
       <div class="row justify-content-center">
-      <div class="col-md-6 col-lg-8 ">
+      <div class="col-md-6 col-lg-6 ">
       <form method="post" action="{% url 'sign-in' %}" name="sentMessage" id="contactForm" validate>
           {% csrf_token %}
           {% if form.errors %}
@@ -86,9 +86,11 @@
             <button type="submit" class="btn btn-primary" id="sendMessageButton">Login</button>
           </div>
         </form>
-        <p class="text-center font-italic">Only content editors can login. <a style="text-decoration: inherit; color:#17a2b8;" href="{% url 'books' %}">Back to Home</a></p>
       </div>
+      
       </div>
+      <p class="text-center font-italic">Only content editors can login. <a style="text-decoration: inherit; color:#17a2b8;" href="{% url 'books' %}">Back to Home</a></p>
+
         
     </div>
   </div>

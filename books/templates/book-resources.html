@@ -11,18 +11,13 @@
         {% endfor %}
       </h3>
     </a>
-    <div class="m-2 pt-5 pb-3 row justify-content-center">
-        <div class="post-preview col-md-6 col-lg-6 ">
-            <p class="post-meta"><a data-toggle="tool-tip" data-placement="bottom" title="Kindle logo" href="{{ book.kindle }}"><img class="img img-fluid" style="width: 75px; height: 75px; border-radius: 50%;" src="{% static 'img/kindlekid.jpg' %}" alt="kindle-logo"></a> Get the book on
-                <a data-toggle="tool-tip" data-placement="bottom" title="Go to Kindle.com" style="text-decoration: inherit;" href="{{ book.kindle }}"> Kindle</a>
-              </p>
-        </div>
-        <div class="post-preview col-md-6 col-lg-6 ">
-            <p class="post-meta"><a data-toggle="tool-tip" data-placement="bottom" title="Audible logo" href="{{ book.audible }}"><img class="img img-fluid" style="width: 75px; height: 75px; border-radius: 50%;" src="{% static 'img/audible-publishing-logo.png' %}" alt="audible-logo"></a> Get the audiobook on
+        
+        <div class=" post-preview  media p-3">
+          <a data-toggle="tool-tip" data-placement="bottom" title="Audible logo" href="{{ book.audible }}"><img class=" img img-fluid" style="width: 75px; height: 75px; border-radius: 50%;" src="{% static 'img/new-logo.jpg' %}" alt="audible-logo"></a>
+            <p class="post-meta media-body  ml-5 "> Get the audio version of this book for <span class="text-dark font-weight-bold"> free </span>  on
                 <a data-toggle="tool-tip" data-placement="bottom" title="Go to Audible.com" style="text-decoration: inherit;" href="{{ book.audible }}"> Audible</a>
             </p>
         </div>
-    </div>
     
     
   </div>

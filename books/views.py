@@ -67,7 +67,7 @@ class ReviewList(View):
 	List all of the books that we want to review.
 	"""
     def get(self, request):
-        books = Book.objects.filter(date_reviewed__isnull=True)
+        books = Book.objects.all()
         
         context = {
             'books': books,
@@ -76,12 +76,13 @@ class ReviewList(View):
         return render(request, "list-to-review.html", context)
 	
     def post(self, request):
-        form = BookForm(request.POST)
-        books = Book.objects.filter(date_reviewed__isnull=True)
+        form = BookForm(request.POST, request.FILES)
        
         if form.is_valid():
            form.save()
            return redirect('review-books')
+
+        books = Book.objects.filter(date_reviewed__isnull=True)
 
         context = {
             'form': form,
@@ -166,3 +167,6 @@ def comment_view(request, slug):
         return JsonResponse(data)
     else:
         raise Http404
+
+def home_view(request):
+    return render(request, "home.html", {})
